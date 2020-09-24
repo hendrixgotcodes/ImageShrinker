@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/layout/index.css" />
+    <title>Image Shrink</title>
+    <script src="../js/index.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <header class="main_header">
+        <div class="header_center">
+          <center>
+            <img src="../img/images-regular.svg" alt="" class="logo" />
+            <h1 class="main_head">ImageShrink</h1>
+          </center>
+          <span class="motto">Choose an image to resize</span>
+        </div>
+      </header>
+
+      <center class="main">
+        <submit class="btn_main">Browse</submit>
+        <input type="text" name="" id="" placeholder="Upload File" class="main_textBox">
+
+        <em class="em"><b>Quality: </b> The lower the quality, the smaller the file size</em>
+
+        <input type="range" min=1 max="100" value="70" name="" class="main_slider" id="slider">
+
+        <input type="submit" value="RESIZE" class="btn_main--dark">
+
+        <span class="output_path">Output Path</span>
+      </center>
+    </main>
+  </body>
+</html>
