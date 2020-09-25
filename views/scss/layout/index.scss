@@ -5,6 +5,7 @@ body {
 }
 
 main {
+  position: relative;
   padding: 2rem;
   width: 100%;
 }
@@ -22,6 +23,7 @@ main {
     align-items: center;
 
     center {
+      position: relative;
       padding: 1rem;
       padding-bottom: 0.5rem;
       display: flex;
@@ -43,7 +45,13 @@ main {
 }
 
 .main {
+  position: relative;
   width: 100%;
+
+  .btn_browse {
+    width: 100%;
+    position: relative;
+  }
 
   .btn_main {
     display: block;
@@ -54,18 +62,29 @@ main {
     padding: 0.8rem 0;
     border: none;
     border-radius: 2px;
-    box-shadow: -0.5px 1.5px 3px rgba(0, 0, 0, 0.123);
+    box-shadow: -0.5px 1.5px 3px rgba(0, 0, 0, 0.322);
+  }
+  .btn_fileReader {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    cursor: pointer;
+    bottom: 0;
+    height: 100%;
+    opacity: 0;
   }
 
-  .main_textBox {
+  #file_name {
+    display: block;
+    text-align: left;
     width: 100%;
     border: none;
     border-bottom: 2px solid #cccccc;
     height: 2.5rem;
     font-weight: 400;
     font-size: 1rem;
-    padding: 0 0.3rem;
-
+    display: flex;
+    align-items: center;
     &:focus {
       outline: none;
     }
@@ -104,5 +123,8 @@ main {
     margin: 1.5rem 0;
     height: 3.5rem;
     box-shadow: -1.5px 1px 4px rgba(0, 0, 0, 0.164);
+  }
+  #outputPath {
+    font-weight: 300;
   }
 }

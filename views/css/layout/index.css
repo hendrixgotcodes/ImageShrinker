@@ -38,6 +38,7 @@ body {
   height: 100%; }
 
 main {
+  position: relative;
   padding: 2rem;
   width: 100%; }
 
@@ -52,6 +53,7 @@ main {
     justify-content: center;
     align-items: center; }
     .main_header .header_center center {
+      position: relative;
       padding: 1rem;
       padding-bottom: 0.5rem;
       display: flex;
@@ -66,7 +68,11 @@ main {
       font-weight: 600; }
 
 .main {
+  position: relative;
   width: 100%; }
+  .main .btn_browse {
+    width: 100%;
+    position: relative; }
   .main .btn_main, .main .btn_main--dark {
     display: block;
     cursor: pointer;
@@ -76,16 +82,27 @@ main {
     padding: 0.8rem 0;
     border: none;
     border-radius: 2px;
-    box-shadow: -0.5px 1.5px 3px rgba(0, 0, 0, 0.123); }
-  .main .main_textBox {
+    box-shadow: -0.5px 1.5px 3px rgba(0, 0, 0, 0.322); }
+  .main .btn_fileReader {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    cursor: pointer;
+    bottom: 0;
+    height: 100%;
+    opacity: 0; }
+  .main #file_name {
+    display: block;
+    text-align: left;
     width: 100%;
     border: none;
     border-bottom: 2px solid #cccccc;
     height: 2.5rem;
     font-weight: 400;
     font-size: 1rem;
-    padding: 0 0.3rem; }
-    .main .main_textBox:focus {
+    display: flex;
+    align-items: center; }
+    .main #file_name:focus {
       outline: none; }
   .main .em {
     font-size: 0.8rem;
@@ -112,3 +129,5 @@ main {
     margin: 1.5rem 0;
     height: 3.5rem;
     box-shadow: -1.5px 1px 4px rgba(0, 0, 0, 0.164); }
+  .main #outputPath {
+    font-weight: 300; }

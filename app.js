@@ -1,4 +1,9 @@
-const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
+const { app, BrowserWindow, Menu, globalShortcut, ipcMain, shell } = require("electron");
+const imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant'); 
+const os = require('os');
+const path = require('path');
 
 //Path to serve static files
 const URL_Views = require("url").format({
@@ -19,15 +24,16 @@ const menuTemplate = [];
 //Detecting mac pcs
 const isMac = process.platform === "darwin" ? true : false;
 
+
 //Function  To Initiate Window
 
 function createDefaultWindow() {
   const defaultWin = new BrowserWindow({
-    height: 520,
+    height: 540,
     width: 420,
     resizable: false,
     center: true,
-    icon: `${__dirname}/views/`,
+    icon: icoURL,
     webPreferences: {
       nodeIntegration: true
     }
@@ -36,9 +42,7 @@ function createDefaultWindow() {
   defaultWin.loadURL(URL_Views);
   defaultWin.loadFile("./views/html/index.html");
 
-  //Setting menuBar to null (Removing)
 
-  const menu = Menu.buildFromTemplate(menuTemplate);
   //Registering global shortcuts
   globalShortcut.register(isMac ? "Command+r" : "Ctrl+r", () => {
     defaultWin.reload();
@@ -48,9 +52,57 @@ function createDefaultWindow() {
     defaultWin.webContents.toggleDevTools();
   })
 
+
+  //Setting menuBar to null (Removing)
+  const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 }
 
 app.on("ready", () => {
   createDefaultWindow();
 });
+
+ipcMain.on("reduceImage",(e, options)=>{
+  options.fileDest = path.join(os.homedir(), 'resized');
+  reduceImage(options);
+});
+
+async function reduceImage({imgPath, value, fileDest}){
+
+  console.log(fileDest)
+  const slash = require('slash');
+  
+  value = value/100;
+
+  const files = await imagemin([slash(imgPath)],{
+    destination: fileDest,
+    plugins: [
+      imageminJpegtran(),
+      imageminPngquant({
+        quality: [value,value]
+      })
+    ]
+  })
+
+
+  shell.openPath(fileDest);
+
+}
+
+ipcMain.on('generateErrorMessage',(message)=>{
+
+});
+
+function createModal(){
+  const modal = new BrowserWindow({
+    width: 300,
+    height: 200,
+    resizable: false,
+    alwaysOnTop: true
+  });
+
+  modal.loadURL(URL_Views);
+  modal.loadFile('./html/error.html')
+}
+
+

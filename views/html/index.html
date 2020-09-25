@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/layout/index.css" />
     <title>Image Shrink</title>
-    <script src="../js/index.js"></script>
   </head>
 
   <body>
@@ -20,18 +19,38 @@
         </div>
       </header>
 
-      <center class="main">
-        <submit class="btn_main">Browse</submit>
-        <input type="text" name="" id="" placeholder="Upload File" class="main_textBox">
+      <center class="main" id="form-image">
+        <div class="btn_browse">
+          <label class="btn_main" >Browse</label>
+          <input type="file" class="btn_fileReader" id="btn_fileReader">
+        </div>
 
-        <em class="em"><b>Quality: </b> The lower the quality, the smaller the file size</em>
+        <label for="" class="main_textbox" id="file_name">Choose a file</label>
 
-        <input type="range" min=1 max="100" value="70" name="" class="main_slider" id="slider">
+        <em class="em">
+          <b>Quality:</b>
+          The lower the quality, the smaller the file size
+        </em>
 
-        <input type="submit" value="RESIZE" class="btn_main--dark">
+        <input
+          type="range"
+          min="1"
+          max="100"
+          value="70"
+          name=""
+          class="main_slider"
+          id="slider"
+        />
 
-        <span class="output_path">Output Path</span>
+        <input type="submit" value="RESIZE" accept="image/*" id="btn_submit" class="btn_main--dark" />
+
+        <strong class="output_path">
+          Output Path:
+          <span id="outputPath"></span>
+        </strong>
       </center>
     </main>
+
+    <script src="../js/index.js"></script>
   </body>
 </html>
