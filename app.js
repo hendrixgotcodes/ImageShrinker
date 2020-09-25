@@ -1,9 +1,17 @@
-const { app, BrowserWindow, Menu, globalShortcut, ipcMain, shell } = require("electron");
-const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
-const imageminPngquant = require('imagemin-pngquant'); 
-const os = require('os');
-const path = require('path');
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  globalShortcut,
+  ipcMain,
+  shell,
+  dialog,
+} = require("electron");
+const imagemin = require("imagemin");
+const imageminJpegtran = require("imagemin-jpegtran");
+const imageminPngquant = require("imagemin-pngquant");
+const os = require("os");
+const path = require("path");
 
 //Path to serve static files
 const URL_Views = require("url").format({
@@ -24,7 +32,6 @@ const menuTemplate = [];
 //Detecting mac pcs
 const isMac = process.platform === "darwin" ? true : false;
 
-
 //Function  To Initiate Window
 
 function createDefaultWindow() {
@@ -35,23 +42,21 @@ function createDefaultWindow() {
     center: true,
     icon: icoURL,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   defaultWin.loadURL(URL_Views);
   defaultWin.loadFile("./views/html/index.html");
-
 
   //Registering global shortcuts
   globalShortcut.register(isMac ? "Command+r" : "Ctrl+r", () => {
     defaultWin.reload();
   });
 
-  globalShortcut.register(isMac ? "Command+Option+I" : "Ctrl+Shift+I",()=>{
+  globalShortcut.register(isMac ? "Command+Option+I" : "Ctrl+Shift+I", () => {
     defaultWin.webContents.toggleDevTools();
-  })
-
+  });
 
   //Setting menuBar to null (Removing)
   const menu = Menu.buildFromTemplate(menuTemplate);
@@ -62,47 +67,34 @@ app.on("ready", () => {
   createDefaultWindow();
 });
 
-ipcMain.on("reduceImage",(e, options)=>{
-  options.fileDest = path.join(os.homedir(), 'resized');
+ipcMain.on("reduceImage", (e, options) => {
+  options.fileDest = path.join(os.homedir(), "resized");
   reduceImage(options);
 });
 
-async function reduceImage({imgPath, value, fileDest}){
+async function reduceImage({ imgPath, value, fileDest }) {
+  console.log(fileDest);
+  const slash = require("slash");
 
-  console.log(fileDest)
-  const slash = require('slash');
-  
-  value = value/100;
+  value = value / 100;
 
-  const files = await imagemin([slash(imgPath)],{
+  const files = await imagemin([slash(imgPath)], {
     destination: fileDest,
     plugins: [
       imageminJpegtran(),
       imageminPngquant({
-        quality: [value,value]
-      })
-    ]
-  })
-
-
-  shell.openPath(fileDest);
-
-}
-
-ipcMain.on('generateErrorMessage',(message)=>{
-
-});
-
-function createModal(){
-  const modal = new BrowserWindow({
-    width: 300,
-    height: 200,
-    resizable: false,
-    alwaysOnTop: true
+        quality: [value, value],
+      }),
+    ],
   });
 
-  modal.loadURL(URL_Views);
-  modal.loadFile('./html/error.html')
+  shell.openPath(fileDest);
 }
 
+ipcMain.on("generateErrorMessage", messageShown => {
+  createModal(messageShown);
+});
 
+function createModal(messageShown) {
+  dialog.showErrorBox('', 'Please select an image')
+}

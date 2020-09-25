@@ -21,7 +21,7 @@ btnBrowse.addEventListener("input", (e)=>{
 })
 btnSubmit.addEventListener("click", (e)=>{
 
-    if(btnBrowse.value === null){
+    if(btnBrowse.value === ''){
         ipcRenderer.send("generateErrorMessage","Please select a file first")
     }
 
