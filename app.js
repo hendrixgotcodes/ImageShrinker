@@ -96,5 +96,5 @@ ipcMain.on("generateErrorMessage", messageShown => {
 });
 
 function createModal(messageShown) {
-  dialog.showErrorBox('', 'Please select an image')
+  dialog.showErrorBox("", "Please select an image");
 }
