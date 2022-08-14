@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Image from './Image'
-import ImagePicker from './ImagePicker'
+import Image from '../molecules/Image'
+import ImagePicker from '../molecules/ImagePicker'
 import {nanoid} from 'nanoid'
 
 export default function ImageTray() {
