@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    font-family: Poppins, sans-serif;
+}
+
+.custom_scrollbar--hor::-webkit-scrollbar {
+    width: 5px;
+    height: 0px;
+  }
+  
+/* Track */
+.custom_scrollbar--hor::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.custom_scrollbar--hor::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+}
+  
+/* Handle on hover */
+.custom_scrollbar--hor::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
