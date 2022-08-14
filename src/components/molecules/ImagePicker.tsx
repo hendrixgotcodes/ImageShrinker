@@ -1,5 +1,5 @@
 import React, { ChangeEvent, forwardRef, useState, Ref } from 'react'
-import ImageIcon from '../Icons/ImageIcon'
+import ImageIcon from '../atoms/Icons/ImageIcon'
 
 function ImagePicker({onChange}:{onChange: (files: File[])=>void}, ref:Ref<HTMLDivElement>) {
 
