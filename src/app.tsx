@@ -1,13 +1,13 @@
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
-import { Slider, Tabs } from './components/molecules'
+import { ProgressBar, Slider, Tabs } from './components/molecules'
 
 export default function render() {
   ReactDom.render(
     <div className='flex justify-center items-center w-full h-full'>
       {/* <ImagePicker onChange={()=>{}} /> */}
       {/* <ImageTray /> */}
-      <Tabs
+      {/* <Tabs
           tabs={[
             {
               title: "Degrade", 
@@ -18,7 +18,8 @@ export default function render() {
             },
             {title: "Resize", children: "resize"}
           ]}
-      />
+      /> */}
+      <div className='h-16 w-full'><ProgressBar progress={98} /></div>
     </div>, document.body
   )
 }
