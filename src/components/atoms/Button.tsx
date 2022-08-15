@@ -6,29 +6,33 @@ interface ButtonPropTypes extends HTMLAttributes<HTMLButtonElement>{
 }
 
 export default 
-function Button({invertColors=false,children}:ButtonPropTypes) {
+function Button({invertColors=false,children, ...rest}:ButtonPropTypes) {
 
     const btnClasses = classNames({
-        "font-bold": true,
-        "p-1":true,
+        "text-xs": true,
+        // "font-bold": true,
+        "p-1.5":true,
         "bg-primary": !invertColors,
         "text-gray-light": !invertColors,
-        "bg-gray-dark": invertColors,
+        "bg-gray-200": invertColors,
         "text-primary": invertColors
     })
     
   return (
-    <button className={btnClasses}>
+    <button className={btnClasses} {...rest}>
         {children}
     </button>
   )
 }
 
-export function SecondaryButton<T extends HTMLAttributes<HTMLButtonElement>>({children}:T) {
+export function SecondaryButton<T extends HTMLAttributes<HTMLButtonElement>>({children, ...rest}:T) {
 
     
   return (
-    <button className="font-bold p-1 bg-secondary text-gray-light">
+    <button 
+      className="font-bold p-1 bg-secondary text-gray-light"
+      {...rest}
+    >
         {children}
     </button>
   )

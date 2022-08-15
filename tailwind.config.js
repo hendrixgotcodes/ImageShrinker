@@ -9,6 +9,8 @@ module.exports = {
         "gray-light": "#FAF8FF",
         "gray-dark": "#AAA",
         "gray-darker": "#E8E8E8",
+        "gray-200": "#F2F2F2",
+        "gray-500": "#F0EDFF"
       },
       width: {
         30: "7.5rem",
