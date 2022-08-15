@@ -7,8 +7,6 @@ export default function render() {
   ReactDom.render(
     <div className='w-full h-full'>
      <Main />
-     <div className="h-16 w-full flex justify-center">
-     </div>
     </div>, document.body
   )
 }

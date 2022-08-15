@@ -17,6 +17,9 @@ module.exports = {
       },
       borderWidth:{
         "1": "1.5px"
+      },
+      fontWeight:{
+        "regular": "regular"
       }
     },
   },
