@@ -1,14 +1,12 @@
-import React, { ChangeEvent, forwardRef, useState, Ref } from 'react'
+import React, { ChangeEvent, forwardRef, Ref } from 'react'
 import ImageIcon from '../atoms/Icons/ImageIcon'
 
-function ImagePicker({onChange}:{onChange: (files: File[])=>void}, ref:Ref<HTMLDivElement>) {
+function ImagePicker({onChange, selectedImagesCount}:{onChange: (files: File[])=>void, selectedImagesCount:number}, ref:Ref<HTMLDivElement>) {
 
-  const [selectedImagesCount, setSelectedImagesCount] = useState(0)
 
   function handleOnChange({target}:ChangeEvent<HTMLInputElement>){
     const files =Array.from(target.files)
     onChange(files)
-    setSelectedImagesCount(selectedImagesCount + files.length)
   }
   
   return (

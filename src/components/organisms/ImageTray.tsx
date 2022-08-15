@@ -1,11 +1,13 @@
-import React, { MutableRefObject, Ref, useEffect, useRef, useState } from 'react'
-import { ImagePicker, Image } from '../molecules'
-import {nanoid} from 'nanoid'
 import gsap from 'gsap'
+import { nanoid } from 'nanoid'
+import React, { MutableRefObject, useContext, useEffect, useRef } from 'react'
+import AppContext from '../../context/AppContext'
+import { Image, ImagePicker } from '../molecules'
 
 export default function ImageTray() {
 
-    const [images, setImages] = useState<File[]>([])
+    const {images, setImages} = useContext(AppContext)
+
     const imagePickerRef = useRef<HTMLDivElement>(null)
 
     useEffect(()=>imagePickerRef?.current.scrollIntoView())
@@ -17,7 +19,7 @@ export default function ImageTray() {
     function handleOnImageDelete(file: File, target: MutableRefObject<HTMLDivElement>){
         gsap.to(target?.current, {
             duration: 0.3,
-            y: 12,
+            y: 24,
             opacity: 0,
             ease: "power1"
         })
@@ -31,7 +33,7 @@ export default function ImageTray() {
   return (
     <div className='w-full flex overflow-x-auto justify-center items-start custom_scrollbar--hor overflow-y-visible transition-all duration-300'>
         {<div className='ml-2 mr-14 overflow-visible'>
-            <ImagePicker onChange={handleImagePickerOnChange} ref={imagePickerRef} />
+            <ImagePicker selectedImagesCount={images.length} onChange={handleImagePickerOnChange} ref={imagePickerRef} />
         </div>
         }
         {
