@@ -591,10 +591,6 @@ video {
   height: 100%;
 }
 
-.h-16 {
-  height: 4rem;
-}
-
 .h-0 {
   height: 0px;
 }
@@ -605,22 +601,6 @@ video {
 
 .h-12 {
   height: 3rem;
-}
-
-.h-4 {
-  height: 1rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
-.h-11 {
-  height: 2.75rem;
-}
-
-.h-8 {
-  height: 2rem;
 }
 
 .h-7 {
@@ -647,44 +627,12 @@ video {
   width: 3rem;
 }
 
-.w-4 {
-  width: 1rem;
-}
-
-.w-4\/5 {
-  width: 80%;
-}
-
-.w-1 {
-  width: 0.25rem;
-}
-
-.w-1\/5 {
-  width: 20%;
-}
-
-.w-5\/6 {
+.w-10\/12 {
   width: 83.333333%;
-}
-
-.w-1\/6 {
-  width: 16.666667%;
-}
-
-.w-11\/12 {
-  width: 91.666667%;
-}
-
-.w-1\/12 {
-  width: 8.333333%;
 }
 
 .w-2\/12 {
   width: 16.666667%;
-}
-
-.w-10\/12 {
-  width: 83.333333%;
 }
 
 .cursor-pointer {
@@ -831,22 +779,8 @@ video {
   padding: 0.25rem;
 }
 
-.p-4 {
-  padding: 1rem;
-}
-
 .p-2 {
   padding: 0.5rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .py-8 {
@@ -903,6 +837,38 @@ video {
 
 .opacity-0 {
   opacity: 0;
+}
+
+@font-face {
+  font-family: "Poppins";
+
+  src: url("../fonts/Poppins-Regular.woff") format("woff");
+
+  font-weight: regular;
+}
+
+@font-face {
+  font-family: "Poppins";
+
+  src: url("../fonts/Poppins-Regular.woff") format("woff");
+
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+
+  src: url("../fonts/Poppins-Light.woff") format("woff");
+
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Poppins";
+
+  src: url("../fonts/Poppins-Bold.woff") format("woff");
+
+  font-weight: bold;
 }
 
 *{
