@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
+import { SecondaryButton, TextInput } from './components/atoms'
 import { ProgressBar, Slider, Tabs } from './components/molecules'
 
 export default function render() {
@@ -19,7 +20,11 @@ export default function render() {
             {title: "Resize", children: "resize"}
           ]}
       /> */}
-      <div className='h-16 w-full'><ProgressBar progress={98} /></div>
+      {/* <div className='h-16 w-full flex justify-center items-center bg-red-400'>
+        <div className="w-4/5 h-full"><ProgressBar progress={48} /></div>
+        <SecondaryButton className='h-full w-1/5' >Submit</SecondaryButton>
+      </div> */}
+      <TextInput label='width'placeholder="width" />
     </div>, document.body
   )
 }

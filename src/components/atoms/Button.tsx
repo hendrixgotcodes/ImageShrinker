@@ -25,13 +25,12 @@ function Button({invertColors=false,children, ...rest}:ButtonPropTypes) {
   )
 }
 
-export function SecondaryButton<T extends HTMLAttributes<HTMLButtonElement>>({children, ...rest}:T) {
+export function SecondaryButton<T extends HTMLAttributes<HTMLButtonElement>>({children, className,...rest}:T) {
 
-    
   return (
     <button 
-      className="font-bold p-1 bg-secondary text-gray-light"
       {...rest}
+      className={"p-1.5 bg-secondary text-gray-light " + className}
     >
         {children}
     </button>
