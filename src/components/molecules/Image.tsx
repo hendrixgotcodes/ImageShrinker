@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { MutableRefObject, useEffect, useRef } from 'react'
+import { CloseIcon } from '../atoms'
 
-export default function Image({img}:{img: File}) {
+export default function Image({img, onDelete}:{img: File, onDelete?: (img:File, target:MutableRefObject<HTMLDivElement>)=>void}) {
 
   const imgRef = useRef<HTMLImageElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(()=>{
     const imgComponent = imgRef?.current
@@ -15,8 +17,10 @@ export default function Image({img}:{img: File}) {
     return ()=>fileReader.onload = null
   },[])
 
+  
+
   return (
-    <div className='flex flex-col items-center justify-center text-xs w-28'>
+    <div ref={containerRef} className='flex flex-col items-center justify-center text-xs w-28'>
       <div className='w-30 h-24 border border-gray-red rounded-lg flex justify-center items-center relative overflow-hidden'>
           <img 
             src="" 
@@ -24,6 +28,11 @@ export default function Image({img}:{img: File}) {
             className="w-full h-full object-cover" 
             ref={imgRef}
           />
+          <div onClick={()=>onDelete(img, containerRef)} className="w-full h-full absolute top-0 left-0 bg-black/60 flex justify-center items-center transition-all duration-300 cursor-pointer opacity-0 hover:opacity-100">
+            <div className="w-12 h-12">
+              <CloseIcon />
+            </div>
+          </div>
       </div>
       <label className='text-gray-dark mt-3 break-all'>
         {img.name}

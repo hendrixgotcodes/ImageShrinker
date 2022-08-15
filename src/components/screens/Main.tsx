@@ -6,6 +6,17 @@ import ImageTray from '../organisms/ImageTray'
 
 
 export default function Main() {
+
+    let progress = 0
+        
+    const interval = setInterval(()=>{
+        if(progress ===100){
+            clearInterval(interval)
+            return;
+        }
+        progress = progress+5
+    }, 500)
+    
   return (
     <div className='w-full h-full flex flex-col justify-end items-center'>
         <ImageTray />
@@ -26,7 +37,7 @@ export default function Main() {
             
         <div className="flex w-full bg-red-500 h-12">
             <div className="w-10/12">
-                <ProgressBar progress={20} />
+                <ProgressBar progress={progress} />
             </div>
             <div className="w-2/12">
                 <SecondaryButton style={{height: "100%", width: "100%"}}>

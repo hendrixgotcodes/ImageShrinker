@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import React, { ReactNode, useState } from 'react'
 import { Button } from '../atoms'
 
@@ -21,6 +22,7 @@ export default function Tabs({tabs}:TabsProps) {
                 <Button 
                     invertColors={currentTab !== tab}
                     onClick={()=>setCurrentTab(tab)}
+                    key={nanoid(5)}
                 >
                     {tab.title}
                 </Button>
