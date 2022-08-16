@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-export default function ImageIcon() {
+function ImageIcon() {
   return (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
@@ -12,3 +12,5 @@ export default function ImageIcon() {
     </svg>
   )
 }
+
+export default memo(ImageIcon)

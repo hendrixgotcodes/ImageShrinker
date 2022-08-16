@@ -1,11 +1,10 @@
-import React, { HTMLAttributes } from 'react'
+import React, { HTMLAttributes, memo } from 'react'
 import classNames from 'classnames'
 
 interface ButtonPropTypes extends HTMLAttributes<HTMLButtonElement>{
     invertColors?: boolean,
 }
 
-export default 
 function Button({invertColors=false,children, ...rest}:ButtonPropTypes) {
 
     const btnClasses = classNames({
@@ -25,7 +24,7 @@ function Button({invertColors=false,children, ...rest}:ButtonPropTypes) {
   )
 }
 
-export function SecondaryButton<T extends HTMLAttributes<HTMLButtonElement>>({children, className,...rest}:T) {
+function SecondaryBtn<T extends HTMLAttributes<HTMLButtonElement>>({children, className,...rest}:T) {
 
   return (
     <button 
@@ -36,3 +35,6 @@ export function SecondaryButton<T extends HTMLAttributes<HTMLButtonElement>>({ch
     </button>
   )
 }
+
+export const SecondaryButton = memo(SecondaryBtn)
+export default memo(Button)

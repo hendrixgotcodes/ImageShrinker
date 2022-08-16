@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { Property } from 'csstype'
-import React from 'react'
+import React, { memo } from 'react'
 
 interface SeparatorProps{
     direction?: "horizontal"|"vertical", 
@@ -9,7 +9,7 @@ interface SeparatorProps{
     spacing?: Property.Margin<string | number>
 }
 
-export default function Separator({direction="horizontal", color, size="sm", spacing}:SeparatorProps) {
+function Separator({direction="horizontal", color, size="sm", spacing}:SeparatorProps) {
 
     const separatorClasses = classNames({
         "border-b-2": direction==="horizontal" && size==="sm",
@@ -34,3 +34,5 @@ export default function Separator({direction="horizontal", color, size="sm", spa
     />
   )
 }
+
+export default memo(Separator, (prevProps, nextProps)=>JSON.stringify(prevProps) === JSON.stringify(nextProps))

@@ -1,7 +1,7 @@
 import { Property } from 'csstype'
-import React from 'react'
+import React, { memo } from 'react'
 
-export default function TextInput({label, placeholder, bgColor}:{label:string, placeholder:string, bgColor?: Property.BackgroundColor}) {
+function TextInput({label, placeholder, bgColor}:{label:string, placeholder:string, bgColor?: Property.BackgroundColor}) {
   return (
     <label htmlFor={label} className="w-full h-full flex flex-col">
         <span className="text-primary mb-1 text-sm">{label}</span>
@@ -17,3 +17,6 @@ export default function TextInput({label, placeholder, bgColor}:{label:string, p
     </label>
   )
 }
+
+export default memo(TextInput)
+
