@@ -79,7 +79,7 @@ function DegradeChildren(){
     useEffect(()=>{
         const totalImagesSize = images.reduce((prev, curr)=>prev + curr.size, 0)
         setTotalFinalImageSize(`${formatBytes(totalImagesSize - (totalImagesSize * (sliderValue/100)))} (${sliderValue}% lesser)`)
-    }, [sliderValue])
+    }, [sliderValue,images])
 
     
     function handleOnSliderChange(value:number){
