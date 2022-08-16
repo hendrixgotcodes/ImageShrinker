@@ -4,11 +4,32 @@ import AppContext from '../../context/AppContext'
 import { SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
+import gsap from 'gsap'
 
 
 
 export default function Main() {
 
+
+    const handleOnSubmit = async()=>{
+        await gsap.to("#btnSubmit--label", {
+            duration: 0.3,
+            color: "transparent",
+            ease: "expo"
+        })
+        gsap.to("#submitBtn-wrapper",{
+            width: 0,
+            duration: 0.3,
+            delay: 0.1,
+            ease: "expo"
+        })
+        gsap.to("#progressbar-wrapper",{
+            width: "100%",
+            duration: 0.3,
+            delay: 0.1,
+            ease: "expo"
+        })
+    }
     
   return (
     <div className='w-full h-full flex flex-col justify-end items-center'>
@@ -28,13 +49,13 @@ export default function Main() {
         />
         <Separator color='transparent' spacing={"0.5rem 0rem"} />
             
-        <div className="flex w-full bg-red-500 h-12">
-            <div className="w-10/12">
+        <div className="flex w-full bg-red-500 h-12 overflow-hidden">
+            <div className="w-10/12" id='progressbar-wrapper'>
                 <ProgressBar progress={50} />
             </div>
-            <div className="w-2/12">
-                <SecondaryButton style={{height: "100%", width: "100%"}}>
-                    Start
+            <div className="w-2/12" id='submitBtn-wrapper'>
+                <SecondaryButton onClick={handleOnSubmit} style={{height: "100%", width: "100%"}}>
+                    <span id="btnSubmit--label">Start</span>
                 </SecondaryButton>
             </div>
         </div>
