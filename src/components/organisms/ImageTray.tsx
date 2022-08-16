@@ -38,8 +38,8 @@ export default function ImageTray() {
         }
         {
             images.map((image)=>(
-                <div className="mr-14 last:mr-2 overflow-y-visible">
-                    <Image onDelete={handleOnImageDelete} img={image} key={nanoid(5)} />
+                <div className="mr-14 last:mr-2 overflow-y-visible" key={nanoid(5)}>
+                    <Image onDelete={handleOnImageDelete} img={image} />
                 </div>
             ))
         }

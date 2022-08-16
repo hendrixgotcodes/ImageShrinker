@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import formatBytes from '../../utils/FormatBytes'
+import AppContext from '../../context/AppContext'
 import { SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
@@ -7,15 +9,6 @@ import ImageTray from '../organisms/ImageTray'
 
 export default function Main() {
 
-    let progress = 0
-        
-    const interval = setInterval(()=>{
-        if(progress ===100){
-            clearInterval(interval)
-            return;
-        }
-        progress = progress+5
-    }, 500)
     
   return (
     <div className='w-full h-full flex flex-col justify-end items-center'>
@@ -37,7 +30,7 @@ export default function Main() {
             
         <div className="flex w-full bg-red-500 h-12">
             <div className="w-10/12">
-                <ProgressBar progress={progress} />
+                <ProgressBar progress={50} />
             </div>
             <div className="w-2/12">
                 <SecondaryButton style={{height: "100%", width: "100%"}}>
@@ -51,6 +44,27 @@ export default function Main() {
 }
 
 function DegradeChildren(){
+
+    const {images} = useContext(AppContext)
+    const [totalInitialImageSize, setTotalInitialImageSize] = useState("")
+    const [totalFinalImageSize, setTotalFinalImageSize] = useState("")
+    const [sliderValue, setSliderValue] = useState(0)
+
+    useEffect(()=>{
+        const totalImagesSize = images.reduce((prev, curr)=>prev + curr.size, 0)
+        setTotalInitialImageSize(formatBytes(totalImagesSize))
+    }, [images])
+
+    useEffect(()=>{
+        const totalImagesSize = images.reduce((prev, curr)=>prev + curr.size, 0)
+        setTotalFinalImageSize(`${formatBytes(totalImagesSize - (totalImagesSize * (sliderValue/100)))} (${sliderValue}% lesser)`)
+    }, [sliderValue])
+
+    
+    function handleOnSliderChange(value:number){
+        setSliderValue(value)
+    }
+    
     return(
         <div>
             <header>
@@ -58,13 +72,16 @@ function DegradeChildren(){
                 <p className='text-gray-dark text-sm'>Use the slider to set the final quality of your image.</p>
             </header>
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
-            <Slider 
+            <Slider
+                disabled={images.length >0 ? false : true} 
                 label={{
                     topLeft: "initial size",
                     topRight: "final size",
-                    bottomLeft: "3.2MB",
-                    bottomRight: "1.5MB"
+                    bottomLeft: totalInitialImageSize,
+                    bottomRight: totalFinalImageSize
                 }}
+                value={sliderValue}
+                onChange={handleOnSliderChange}
             />
         </div>
     )

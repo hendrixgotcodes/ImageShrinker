@@ -9,7 +9,14 @@ type LabelPropType={
     bottomRight: string,
 }
 
-export default function Slider({label}:{label?:LabelPropType}) {
+type SliderPropTypes={
+    label?:LabelPropType, 
+    disabled?:boolean, 
+    onChange?:(value: number)=>void,
+    value?: number
+}
+
+export default function Slider({label, disabled=false, onChange, value=0}:SliderPropTypes) {
   return (
     <div className='w-full text-xs'>
         <div className="w-full flex justify-between items-center text-primary">
@@ -21,6 +28,9 @@ export default function Slider({label}:{label?:LabelPropType}) {
                 {backgroundColor: "#121D4C"}
             ]}
             handleStyle={[{backgroundColor: "#121D4C", accentColor:"#121D4C"}]}
+            disabled={disabled}
+            onChange={onChange}
+            value={value}
             // railStyle={{backgroundColor: "#121D4C", accentColor:"#121D4C"}}
         />
         <div className="w-full flex justify-between items-center text-gray-dark">
