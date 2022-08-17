@@ -1,7 +1,7 @@
 import React, { memo, useContext, useEffect, useState } from 'react'
 import formatBytes from '../../utils/FormatBytes'
 import AppContext from '../../context/AppContext'
-import { SecondaryButton, Separator, TextInput } from '../atoms'
+import { Button, SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
 import gsap from 'gsap'
@@ -10,7 +10,7 @@ import gsap from 'gsap'
 declare global {
     interface Window {
         ipcAPIs:{
-            selectFolder: ()=>void;
+            selectFolder: ()=>Promise<string>;
         }
     }
 }
@@ -62,13 +62,17 @@ export default function Main() {
     <div className='w-full h-full flex flex-col justify-end items-center relative'>
         
         <ImageTray />
-        <button 
-            className="text-gray-light bg-red-0 text-xs -translate-y-4 opacity-0 inline-block px-2 py-0.5 bg-primary rounded" 
+        <Button
+            className='-translate-y-4 opacity-0 bg-gray-darker text-xs text-primary px-2 py-1'
+            invertColors={true} 
             id="folder-picker"
-            onClick={()=>window.ipcAPIs.selectFolder()}
+            onClick={async()=>{
+                const res =await window.ipcAPIs.selectFolder()
+                console.log(res)
+            }}
         >
                 Select download folder
-            </button>
+            </Button>
         <Separator color='transparent' spacing={"1rem 0"}  />
         <Tabs 
             tabs={[
