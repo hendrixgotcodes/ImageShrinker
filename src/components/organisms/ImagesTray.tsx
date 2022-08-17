@@ -4,7 +4,7 @@ import React, { MutableRefObject, useContext, useEffect, useRef } from 'react'
 import AppContext from '../../context/AppContext'
 import { Image, ImagePicker } from '../molecules'
 
-export default function ImageTray() {
+export default function ImagesTray() {
 
     const {images, setImages} = useContext(AppContext)
     const imagePickerRef = useRef<HTMLDivElement>(null)

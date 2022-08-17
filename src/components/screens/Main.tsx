@@ -3,7 +3,7 @@ import formatBytes from '../../utils/FormatBytes'
 import AppContext from '../../context/AppContext'
 import { Button, SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
-import ImageTray from '../organisms/ImageTray'
+import ImagesTray from '../organisms/ImagesTray'
 import * as animator from '../../utils/animator'
 // import logo from '../../assets/Logo.png'
 
@@ -37,7 +37,7 @@ export default function Main() {
   return (
     <div className='w-full h-full flex flex-col justify-end items-center relative'>
         
-        <ImageTray />
+        <ImagesTray />
         <Button
             className='-translate-y-4 opacity-0 bg-gray-darker text-xs text-primary px-2 py-1'
             invertColors={true} 

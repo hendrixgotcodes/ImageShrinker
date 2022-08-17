@@ -1,3 +1,4 @@
+import gsap from 'gsap'
 import React, { MutableRefObject, useEffect, useRef } from 'react'
 import { CloseIcon } from '../atoms'
 
@@ -21,7 +22,7 @@ export default function Image({img, onDelete}:{img: File, onDelete?: (img:File, 
 
   return (
     <div ref={containerRef} className='flex flex-col items-center justify-center text-xs w-28'>
-      <div className='w-30 h-24 border border-gray-red rounded-lg flex justify-center items-center relative overflow-hidden'>
+      <div className='w-30 h-24 border border-gray-dark rounded-lg flex justify-center items-center relative overflow-hidden'>
           <img 
             src="" 
             alt={img.name}
@@ -39,4 +40,29 @@ export default function Image({img, onDelete}:{img: File, onDelete?: (img:File, 
       </label>
     </div>
   )
+}
+
+function ImageSkeleton(){
+
+  useEffect(()=>{
+    gsap.to(".img-skeleton",{
+      opacity:0.6,
+      duration: 0.5,
+      yoyo: true,
+      repeat: -1
+    })
+
+  },[])
+
+  return(
+    <div
+      className='img-skeleton flex flex-col items-center justify-center text-xs w-28'
+      id=''
+    >
+        <div className='w-30 h-24 bg-gray-darker rounded-lg'/>
+        <div className="w-30 h-3 rounded-lg mt-3 bg-gray-darker"/>
+
+    </div>
+  )
+  
 }
