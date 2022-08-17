@@ -4,7 +4,7 @@ import AppContext from '../../context/AppContext'
 import { Button, SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
-import { hideStartButton, showFolderPickerButton } from '../../utils/animators'
+import { hideStartButton, showFolderPickerButton, hideFolderPickerButton } from '../../utils/animators'
 // import logo from '../../assets/Logo.png'
 
 declare global {
@@ -22,6 +22,7 @@ export default function Main() {
 
     useEffect(()=>{
         if(images.length>0) showFolderPickerButton()
+        if(images.length === 0) hideFolderPickerButton()
     },[images])
 
     const handleOnSubmit = async()=>{
