@@ -4,7 +4,7 @@ import AppContext from '../../context/AppContext'
 import { Button, SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
-import gsap from 'gsap'
+import { hideStartButton, showFolderPickerButton } from '../../utils/animators'
 // import logo from '../../assets/Logo.png'
 
 declare global {
@@ -16,46 +16,16 @@ declare global {
 }
 
 
-const gsapTimeline = gsap.timeline()
-
 export default function Main() {
 
     const {images} = useContext(AppContext)
 
     useEffect(()=>{
-        if(images.length>0){
-            gsapTimeline.to("#img-tray", {
-                y: -40,
-                duration: 0.3,
-                delay: 0.5,
-                // ease: "power2.easeInOut"
-            })
-            gsapTimeline.to("#folder-picker",{
-                opacity: 1,
-                duration: 0.3,
-                delay: 0.5
-            })
-        }
+        if(images.length>0) showFolderPickerButton()
     },[images])
 
     const handleOnSubmit = async()=>{
-        await gsap.to("#btnSubmit--label", {
-            duration: 0.3,
-            color: "transparent",
-            ease: "expo"
-        })
-        gsap.to("#submitBtn-wrapper",{
-            width: 0,
-            duration: 0.5,
-            delay: 0.1,
-            ease: "expo"
-        })
-        gsap.to("#progressbar-wrapper",{
-            width: "100%",
-            duration: 0.5,
-            delay: 0.1,
-            // ease: "expo"
-        })
+        await hideStartButton()
     }
     
   return (
