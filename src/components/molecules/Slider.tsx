@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import RcSlider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 
@@ -16,7 +16,7 @@ type SliderPropTypes={
     value?: number
 }
 
-export default function Slider({label, disabled=false, onChange, value=0}:SliderPropTypes) {
+function Slider({label, disabled=false, onChange, value=0}:SliderPropTypes) {
   return (
     <div className='w-full text-xs'>
         <div className="w-full flex justify-between items-center text-primary">
@@ -40,3 +40,6 @@ export default function Slider({label, disabled=false, onChange, value=0}:Slider
     </div>
   )
 }
+
+
+export default memo(Slider)

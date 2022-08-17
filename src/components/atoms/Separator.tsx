@@ -19,12 +19,9 @@ function Separator({direction="horizontal", color, size="sm", spacing}:Separator
         "border-l-4": direction === "vertical" && size ==="lg",
         "border-l-8": direction === "vertical" && size ==="xl",
         "w-full": direction==="horizontal",
-        // "h-0": direction==="horizontal",
         "w-2": direction==="vertical",
         "h-full": direction ==="vertical",
         "border-gray-500": true,
-        // "bg-red-400": true
-        // "border-l-gray-500": !color && direction === "vertical",
     })
     
   return (

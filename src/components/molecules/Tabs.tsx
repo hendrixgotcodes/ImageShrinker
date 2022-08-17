@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import React, { ReactNode, useState } from 'react'
+import React, { memo, ReactNode, useState } from 'react'
 import { Button } from '../atoms'
 
 type TabsProps={
@@ -9,7 +9,7 @@ type TabsProps={
     }[]
 }
 
-export default function Tabs({tabs}:TabsProps) {
+function Tabs({tabs}:TabsProps) {
 
     const [currentTab, setCurrentTab] = useState(tabs[0])
     
@@ -37,3 +37,5 @@ export default function Tabs({tabs}:TabsProps) {
     </div>
   )
 }
+
+export default memo(Tabs)

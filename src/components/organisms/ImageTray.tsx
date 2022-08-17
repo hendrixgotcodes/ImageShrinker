@@ -7,10 +7,11 @@ import { Image, ImagePicker } from '../molecules'
 export default function ImageTray() {
 
     const {images, setImages} = useContext(AppContext)
-
     const imagePickerRef = useRef<HTMLDivElement>(null)
 
-    useEffect(()=>imagePickerRef?.current.scrollIntoView())
+    useEffect(()=>imagePickerRef?.current.scrollIntoView(),[images])
+
+    
 
     function handleImagePickerOnChange(files: File[]){
         setImages([...images, ...files])
@@ -31,10 +32,11 @@ export default function ImageTray() {
     }
     
   return (
-    <div className='w-full flex overflow-x-auto justify-center items-start custom_scrollbar--hor overflow-y-visible transition-all duration-300'>
+    <div id="img-tray" className='w-full flex overflow-x-auto justify-center items-start custom_scrollbar--hor overflow-y-visible transition-all duration-300'>
         {<div className='ml-2 mr-14 overflow-visible'>
             <ImagePicker selectedImagesCount={images.length} onChange={handleImagePickerOnChange} ref={imagePickerRef} />
         </div>
+        
         }
         {
             images.map((image)=>(

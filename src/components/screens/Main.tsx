@@ -1,15 +1,42 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { memo, useContext, useEffect, useState } from 'react'
 import formatBytes from '../../utils/FormatBytes'
 import AppContext from '../../context/AppContext'
 import { SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
 import gsap from 'gsap'
+// import logo from '../../assets/Logo.png'
+
+declare global {
+    interface Window {
+        ipcAPIs:{
+            selectFolder: ()=>void;
+        }
+    }
+}
 
 
+const gsapTimeline = gsap.timeline()
 
 export default function Main() {
 
+    const {images} = useContext(AppContext)
+
+    useEffect(()=>{
+        if(images.length>0){
+            gsapTimeline.to("#img-tray", {
+                y: -40,
+                duration: 0.3,
+                delay: 0.5,
+                // ease: "power2.easeInOut"
+            })
+            gsapTimeline.to("#folder-picker",{
+                opacity: 1,
+                duration: 0.3,
+                delay: 0.5
+            })
+        }
+    },[images])
 
     const handleOnSubmit = async()=>{
         await gsap.to("#btnSubmit--label", {
@@ -19,21 +46,29 @@ export default function Main() {
         })
         gsap.to("#submitBtn-wrapper",{
             width: 0,
-            duration: 0.3,
+            duration: 0.5,
             delay: 0.1,
             ease: "expo"
         })
         gsap.to("#progressbar-wrapper",{
             width: "100%",
-            duration: 0.3,
+            duration: 0.5,
             delay: 0.1,
-            ease: "expo"
+            // ease: "expo"
         })
     }
     
   return (
-    <div className='w-full h-full flex flex-col justify-end items-center'>
+    <div className='w-full h-full flex flex-col justify-end items-center relative'>
+        
         <ImageTray />
+        <button 
+            className="text-gray-light bg-red-0 text-xs -translate-y-4 opacity-0 inline-block px-2 py-0.5 bg-primary rounded" 
+            id="folder-picker"
+            onClick={()=>window.ipcAPIs.selectFolder()}
+        >
+                Select download folder
+            </button>
         <Separator color='transparent' spacing={"1rem 0"}  />
         <Tabs 
             tabs={[
@@ -108,7 +143,7 @@ function DegradeChildren(){
     )
 }
 
-function ResizeChildren(){
+function ResizeChildrenComponent(){
     return(
         <div className='w-full'>
             <header>
@@ -117,11 +152,13 @@ function ResizeChildren(){
             </header>
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
             <div className="w-full flex justify-between items-center h-7">
-                <TextInput bgColor="transparent" label='width' placeholder='width' />
+                <TextInput type="number" bgColor="transparent" label='width' placeholder='width' />
                 <Separator color='transparent' direction='vertical' spacing={"0rem 1rem"} />
-                <TextInput bgColor="transparent" label='height' placeholder='height' />
+                <TextInput type="number" bgColor="transparent" label='height' placeholder='height' />
             </div>  
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
         </div>
     )
 }
+
+const ResizeChildren = memo(ResizeChildrenComponent)
