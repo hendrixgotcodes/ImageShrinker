@@ -31,23 +31,34 @@ export function hideFolderPickerButton(){
 }
 
 export async function hideStartButton(){
-    await gsap.to("#btnSubmit--label", {
-        duration: 0.3,
+    gsap.to("#btnSubmit--label", {
+        duration: 0,
         color: "transparent",
         ease: "power2.easeInOut"
     })
     gsap.to("#submitBtn-wrapper",{
         width: 0,
-        duration: 0.5,
-        delay: 0.1,
+        duration: 0.3,
         ease: "power2.easeInOut"
     })
     await gsap.to("#progressbar-wrapper",{
         width: "100%",
-        duration: 0.5,
-        delay: 0.1,
+        duration: 0.3,
         ease: "power2.easeInOut"
     })
 
     return
+}
+
+export async function hideProgressBar(){
+    gsap.to("#submitBtn-wrapper",{
+        width: "100%",
+        duration: 0.3,
+        ease: "power2.easeInOut"
+    })
+    await gsap.to("#progressbar-wrapper",{
+        width: 0,
+        duration: 0.3,
+        ease: "power2.easeInOut"
+    })
 }

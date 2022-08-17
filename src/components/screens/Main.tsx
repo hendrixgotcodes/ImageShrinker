@@ -4,7 +4,7 @@ import AppContext from '../../context/AppContext'
 import { Button, SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImageTray from '../organisms/ImageTray'
-import { hideStartButton, showFolderPickerButton, hideFolderPickerButton } from '../../utils/animators'
+import * as animator from '../../utils/animator'
 // import logo from '../../assets/Logo.png'
 
 declare global {
@@ -19,14 +19,19 @@ declare global {
 export default function Main() {
 
     const {images} = useContext(AppContext)
+    const [currentTab, setCurrentTab] = useState<string>("Degrade")
+
 
     useEffect(()=>{
-        if(images.length>0) showFolderPickerButton()
-        if(images.length === 0) hideFolderPickerButton()
+        if(images.length>0) animator.showFolderPickerButton()
+        if(images.length === 0) animator.hideFolderPickerButton()
     },[images])
 
     const handleOnSubmit = async()=>{
-        await hideStartButton()
+        if(currentTab === "Degrade")
+            await animator.hideStartButton()
+        else if(currentTab === "Resize")
+            await animator.hideProgressBar()
     }
     
   return (
@@ -45,7 +50,8 @@ export default function Main() {
                 Select download folder
             </Button>
         <Separator color='transparent' spacing={"1rem 0"}  />
-        <Tabs 
+        <Tabs
+            onChange={(currentTab)=>setCurrentTab(currentTab.title)}
             tabs={[
                 {
                     title: "Degrade",

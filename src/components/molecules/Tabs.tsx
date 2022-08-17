@@ -1,17 +1,23 @@
 import { nanoid } from 'nanoid'
-import React, { memo, ReactNode, useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { Button } from '../atoms'
 
 type TabsProps={
     tabs:{
         title:string,
         children: ReactNode
-    }[]
+    }[],
+    onChange?: (currentTab: {title:string, children:ReactNode})=>void
 }
 
-function Tabs({tabs}:TabsProps) {
+function Tabs({onChange,tabs}:TabsProps) {
 
     const [currentTab, setCurrentTab] = useState(tabs[0])
+
+    function changeTab(tab: typeof currentTab){
+        setCurrentTab(tab)
+        onChange(tab)
+    }
     
   return (
     <div className='w-full flex flex-col justify-center items-start'>
@@ -20,8 +26,8 @@ function Tabs({tabs}:TabsProps) {
         <div className="flex">
             {tabs.map((tab)=>(
                 <Button 
-                    invertColors={currentTab !== tab}
-                    onClick={()=>setCurrentTab(tab)}
+                    invertColors={currentTab.title !== tab.title}
+                    onClick={()=>changeTab(tab)}
                     key={nanoid(5)}
                 >
                     {tab.title}
@@ -38,4 +44,4 @@ function Tabs({tabs}:TabsProps) {
   )
 }
 
-export default memo(Tabs)
+export default Tabs
