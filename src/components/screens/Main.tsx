@@ -18,7 +18,7 @@ declare global {
 
 export default function Main() {
 
-    const {images} = useContext(AppContext)
+    const {images, loading, setLoading} = useContext(AppContext)
     const [currentTab, setCurrentTab] = useState<string>("Degrade")
 
 
@@ -28,6 +28,7 @@ export default function Main() {
     },[images])
 
     const handleOnSubmit = async()=>{
+        setLoading(true)
         if(currentTab === "Degrade")
             await animator.hideStartButton()
         else if(currentTab === "Resize")
@@ -51,6 +52,7 @@ export default function Main() {
             </Button>
         <Separator color='transparent' spacing={"1rem 0"}  />
         <Tabs
+            locked={loading}
             onChange={(currentTab)=>setCurrentTab(currentTab.title)}
             tabs={[
                 {
@@ -67,10 +69,15 @@ export default function Main() {
             
         <div className="flex w-full bg-red-500 h-12 overflow-hidden">
             <div className="w-10/12" id='progressbar-wrapper'>
-                <ProgressBar progress={50} />
+                <ProgressBar loading={loading} progress={10} />
             </div>
             <div className="w-2/12" id='submitBtn-wrapper'>
-                <SecondaryButton onClick={handleOnSubmit} style={{height: "100%", width: "100%"}}>
+                <SecondaryButton  
+                    onClick={handleOnSubmit} 
+                    style={{height: "100%", width: "100%"}}
+                    disabled={images.length <= 0 ? true : false}
+                    // disabled={true}
+                >
                     <span id="btnSubmit--label">Start</span>
                 </SecondaryButton>
             </div>
@@ -82,7 +89,7 @@ export default function Main() {
 
 function DegradeChildren(){
 
-    const {images} = useContext(AppContext)
+    const {images, loading} = useContext(AppContext)
     const [totalInitialImageSize, setTotalInitialImageSize] = useState("")
     const [totalFinalImageSize, setTotalFinalImageSize] = useState("")
     const [sliderValue, setSliderValue] = useState(0)
@@ -110,7 +117,7 @@ function DegradeChildren(){
             </header>
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
             <Slider
-                disabled={images.length >0 ? false : true} 
+                disabled={(images.length >0 && loading===true) ? false : true} 
                 label={{
                     topLeft: "initial size",
                     topRight: "final size",

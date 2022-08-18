@@ -3,9 +3,14 @@ import classNames from 'classnames'
 
 interface ButtonPropTypes extends HTMLAttributes<HTMLButtonElement>{
     invertColors?: boolean,
+    disabled?:boolean
 }
 
-function Button({invertColors=false,children, ...rest}:ButtonPropTypes) {
+interface SecondaryBtnPropTypes extends HTMLAttributes<HTMLButtonElement>{
+  disabled?:boolean
+}
+
+function Button({invertColors=false,children, disabled=false,...rest}:ButtonPropTypes) {
 
     const btnClasses = classNames({
         "text-xs": true,
@@ -18,18 +23,23 @@ function Button({invertColors=false,children, ...rest}:ButtonPropTypes) {
     })
     
   return (
-    <button className={btnClasses} {...rest}>
+    <button 
+      className={btnClasses} 
+      {...rest}
+      disabled={disabled}
+    >
         {children}
     </button>
   )
 }
 
-function SecondaryBtn<T extends HTMLAttributes<HTMLButtonElement>>({children, className,...rest}:T) {
+function SecondaryBtn({children, className, disabled=false,...rest}:SecondaryBtnPropTypes) {
 
   return (
     <button 
       {...rest}
       className={"p-1.5 bg-secondary text-gray-light " + className}
+      disabled={disabled}
     >
         {children}
     </button>

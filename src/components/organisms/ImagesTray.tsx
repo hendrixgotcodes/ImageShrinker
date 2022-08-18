@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import gsap from 'gsap'
 import { nanoid } from 'nanoid'
 import React, { MutableRefObject, useContext, useEffect, useRef } from 'react'
@@ -8,8 +9,12 @@ export default function ImagesTray() {
 
     const {images, setImages} = useContext(AppContext)
     const imagePickerRef = useRef<HTMLDivElement>(null)
-
     useEffect(()=>imagePickerRef?.current.scrollIntoView(),[images])
+
+    const imagePickerWrapperClass = classNames({
+        "ml-2 overflow-visible": false,
+        "mr-14": images.length > 0 ? true : false
+    })
 
     
 
@@ -33,10 +38,10 @@ export default function ImagesTray() {
     
   return (
     <div id="img-tray" className='w-full flex overflow-x-auto justify-center items-start custom_scrollbar--hor overflow-y-visible transition-all duration-300'>
-        {<div className='ml-2 mr-14 overflow-visible'>
-            <ImagePicker selectedImagesCount={images.length} onChange={handleImagePickerOnChange} ref={imagePickerRef} />
-        </div>
-        
+        {
+            <div className={imagePickerWrapperClass}>
+                <ImagePicker selectedImagesCount={images.length} onChange={handleImagePickerOnChange} ref={imagePickerRef} />
+            </div>
         }
         {
             images.map((image)=>(
