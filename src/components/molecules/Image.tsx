@@ -22,7 +22,7 @@ export default function Image({img, onDelete}:{img: File, onDelete?: (img:File, 
 
   return (
     <div ref={containerRef} className='flex flex-col items-center justify-center text-xs w-28'>
-      <div className='w-30 h-24 border border-gray-dark rounded-lg flex justify-center items-center relative overflow-hidden'>
+      <div className='w-30 h-24 rounded-lg flex justify-center items-center relative overflow-hidden'>
           <img 
             src="" 
             alt={img.name}

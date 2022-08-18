@@ -23,8 +23,7 @@ const createWindow = (): void => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
     autoHideMenuBar: true,
-    darkTheme: nativeTheme.shouldUseDarkColors ? true : false,
-    thickFrame: true,
+    darkTheme: false,
     roundedCorners: false,
     resizable: false,
     icon:

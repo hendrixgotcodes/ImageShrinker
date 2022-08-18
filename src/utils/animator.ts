@@ -20,7 +20,6 @@ export function hideFolderPickerButton(){
     gsapTimeline.to("#folder-picker",{
         opacity: 0,
         duration: 0.3,
-        delay: 0.5,
         ease: "power2.easeInOut"
     })
     gsapTimeline.to("#img-tray", {

@@ -1,16 +1,18 @@
 import { nanoid } from 'nanoid'
 import React, { ReactNode, useState } from 'react'
 import { Button } from '../atoms'
+import LockIcon from '../atoms/Icons/LockIcon'
 
 type TabsProps={
     tabs:{
         title:string,
         children: ReactNode
     }[],
-    onChange?: (currentTab: {title:string, children:ReactNode})=>void
+    onChange?: (currentTab: {title:string, children:ReactNode})=>void,
+    locked?: boolean
 }
 
-function Tabs({onChange,tabs}:TabsProps) {
+function Tabs({onChange,tabs, locked=false}:TabsProps) {
 
     const [currentTab, setCurrentTab] = useState(tabs[0])
 
@@ -29,8 +31,16 @@ function Tabs({onChange,tabs}:TabsProps) {
                     invertColors={currentTab.title !== tab.title}
                     onClick={()=>changeTab(tab)}
                     key={nanoid(5)}
+                    disabled={locked}
                 >
-                    {tab.title}
+                    <div className="flex items-center">
+                        {tab.title} &nbsp;
+                        {
+                            locked && (<div className="w-2 h-2">
+                            <LockIcon />
+                        </div>)
+                        }
+                    </div>
                 </Button>
             ))}
         </div>
