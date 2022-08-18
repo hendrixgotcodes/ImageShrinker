@@ -18,7 +18,7 @@ declare global {
 
 export default function Main() {
 
-    const {images, loading, setLoading} = useContext(AppContext)
+    const {images, loading, setLoading, setDestinationFolder} = useContext(AppContext)
     const [currentTab, setCurrentTab] = useState<string>("Degrade")
 
 
@@ -34,6 +34,11 @@ export default function Main() {
         else if(currentTab === "Resize")
             await animator.hideProgressBar()
     }
+
+    const handleOnFolderPickerClick = async()=>{
+        const res =await window.ipcAPIs.selectFolder()
+        setDestinationFolder(res ? res : null)
+    }
     
   return (
     <div className='w-full h-full flex flex-col justify-end items-center relative'>
@@ -43,12 +48,10 @@ export default function Main() {
             className='-translate-y-4 opacity-0 bg-gray-darker text-xs text-primary px-2 py-1'
             invertColors={true} 
             id="folder-picker"
-            onClick={async()=>{
-                const res =await window.ipcAPIs.selectFolder()
-                console.log(res)
-            }}
+            onClick={handleOnFolderPickerClick}
+            disabled={images.length > 0 ? false : true}
         >
-                Select download folder
+                Set destination folder
             </Button>
         <Separator color='transparent' spacing={"1rem 0"}  />
         <Tabs
@@ -67,7 +70,7 @@ export default function Main() {
         />
         <Separator color='transparent' spacing={"0.5rem 0rem"} />
             
-        <div className="flex w-full bg-red-500 h-12 overflow-hidden">
+        <div className="flex w-full h-12 overflow-hidden">
             <div className="w-10/12" id='progressbar-wrapper'>
                 <ProgressBar loading={loading} progress={10} />
             </div>
