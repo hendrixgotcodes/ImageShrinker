@@ -1,18 +1,21 @@
 import { Property } from 'csstype'
-import React, { HTMLInputTypeAttribute, memo } from 'react'
+import React, { HTMLAttributes, HTMLInputTypeAttribute, memo } from 'react'
 
-type TextInputProps= {
+interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
   label:string, 
   placeholder:string, 
   type?:HTMLInputTypeAttribute,
-  bgColor?: Property.BackgroundColor
+  bgColor?: Property.BackgroundColor,
+  value?: number,
+  autoFocus?: boolean
 }
 
-function TextInput({label, placeholder, bgColor, type}:TextInputProps) {
+function TextInput({label, placeholder, bgColor, type, value, autoFocus,...rest}:TextInputProps) {
   return (
     <label htmlFor={label} className="w-full h-full flex flex-col">
         <span className="text-primary mb-1 text-sm">{label}</span>
-        <input 
+        <input
+          {...rest}
           type={type} 
           name={label} 
           placeholder={placeholder} 
@@ -20,6 +23,8 @@ function TextInput({label, placeholder, bgColor, type}:TextInputProps) {
           style={{
             backgroundColor: bgColor
           }}
+          value={value}
+          autoFocus={autoFocus}
         />
     </label>
   )

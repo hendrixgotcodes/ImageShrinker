@@ -14,8 +14,8 @@ contextBridge.exposeInMainWorld("imageManipulator", {
   )=> {
     ipcRenderer.invoke("imageManipulator:degradeImage", files, degradation, destinationFolder)
   },
-  resizeImage: (imagePath: string, finalHeight:number, finalWidth:number)=>{
-    ipcRenderer.invoke("imageManipulator:resizeImage", imagePath, finalHeight, finalWidth)
+  resizeImage: (imagePath: string, destinationFolder:string,finalHeight:number, finalWidth:number)=>{
+    ipcRenderer.invoke("imageManipulator:resizeImage", imagePath, destinationFolder, finalHeight, finalWidth)
   }
   // sendImageProcessingProgress
 })

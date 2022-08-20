@@ -49,10 +49,15 @@ export async function degradeImage(
   }
 }
 
-export async function resizeImage(imagePath:string, finalHeight:number, finalWidth:number){
+export async function resizeImage(imagePath:string, destinationFolder:string, finalHeight:number, finalWidth:number){
+
+    const newImagePath = `${destinationFolder}\\${
+        imagePath.split("\\").splice(-1, 1)[0]
+      }`
 
     const res = await Jimp.read(imagePath)
     res.resize(finalWidth, finalHeight)
+    .write(newImagePath)
 
     return
     

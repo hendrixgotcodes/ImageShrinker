@@ -18,7 +18,12 @@ declare global {
                 degradation: number,
                 destinationFolder: string,
             )=>Promise<void>,
-            resizeImage: (imagePath: string, finalHeight:number, finalWidth: number)=>Promise<void>
+            resizeImage: (
+                imagePath: string, 
+                destinationFolder:string,
+                finalHeight:number, 
+                finalWidth: number,
+            )=>Promise<void>
         }
     }
 }
@@ -26,8 +31,9 @@ declare global {
 
 export default function Main() {
 
-    const {images, loading, destinationFolder,degradation, setLoading, setDestinationFolder, setImages, setMode} = useContext(AppContext)
+    const {images, loading, destinationFolder,degradation, resizeHeight, resizeWidth,setLoading, setDestinationFolder, setImages, setMode, setResizeHeight,setResizeWidth} = useContext(AppContext)
     const [currentTab, setCurrentTab] = useState<string>("Degrade")
+    const [progress,setProgress] = useState(0)
 
     useEffect(()=>{
         if(images.length>0) animator.showFolderPickerButton()
@@ -37,22 +43,36 @@ export default function Main() {
     const handleOnSubmit = async()=>{
         setLoading(true)
         if(currentTab === "Degrade"){
-
+            
+            
+            setProgress(50)
             await animator.hideStartButton()
             const imgs:{path:string, size:number}[] = []
             images.forEach((image)=>imgs.push({path:image.path, size: image.size}))
             
             await window.imageManipulator.degradeImage(imgs, degradation,destinationFolder,)
+            setProgress(100)
 
             setLoading(false)
             await animator.showStartButton()
             setImages([])
+            setLoading(false)
+            setProgress(0)
+
+            setResizeHeight(0)
+            setResizeWidth(0)
 
             
         }
         else if(currentTab === "Resize"){
+
+            const filePath = images[0].path
+            
             await animator.hideProgressBar()
-            // await (re)
+            await window.imageManipulator.resizeImage(filePath, destinationFolder, resizeHeight, resizeWidth )
+            await animator.showStartButton()
+            setImages([])
+            setLoading(false)
         }
     }
 
@@ -80,6 +100,7 @@ export default function Main() {
             onChange={(currentTab)=>{
                 setCurrentTab(currentTab.title)
                 setMode(currentTab.title === "Degrade" ? "degrade":"resize")
+                setImages([])
             }}
             tabs={[
                 {
@@ -96,7 +117,7 @@ export default function Main() {
             
         <div className="flex w-full h-12 overflow-hidden">
             <div className="w-10/12" id='progressbar-wrapper'>
-                <ProgressBar loading={loading} progress={10} />
+                <ProgressBar loading={loading} progress={progress} />
             </div>
             <div className="w-2/12 bg-red-400" id='submitBtn-wrapper'>
                 <SecondaryButton  
@@ -158,6 +179,9 @@ function DegradeChildren(){
 }
 
 function ResizeChildrenComponent(){
+
+    const {resizeHeight, resizeWidth, setResizeHeight, setResizeWidth} = useContext(AppContext)
+    
     return(
         <div className='w-full'>
             <header>
@@ -166,9 +190,24 @@ function ResizeChildrenComponent(){
             </header>
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
             <div className="w-full flex justify-between items-center h-7">
-                <TextInput type="number" bgColor="transparent" label='width' placeholder='width' />
+                <TextInput 
+                    type="number" 
+                    bgColor="transparent" 
+                    label='width' 
+                    placeholder='width'
+                    value={resizeWidth}
+                    onChange={(e)=>setResizeWidth(parseFloat(e.currentTarget.value))}
+                    autoFocus
+                />
                 <Separator color='transparent' direction='vertical' spacing={"0rem 1rem"} />
-                <TextInput type="number" bgColor="transparent" label='height' placeholder='height' />
+                <TextInput 
+                    type="number" 
+                    bgColor="transparent" 
+                    label='height' 
+                    placeholder='height' 
+                    value={resizeHeight}
+                    onChange={(e)=>setResizeHeight(parseFloat(e.currentTarget.value))}
+                />
             </div>  
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
         </div>
