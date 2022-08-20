@@ -49,6 +49,26 @@ export async function hideStartButton(){
     return
 }
 
+export async function showStartButton(){
+    gsap.to("#btnSubmit--label", {
+        duration: 0,
+        color: "inherit",
+        ease: "power2.easeInOut"
+    })
+    gsap.to("#submitBtn-wrapper",{
+        width: "16.67%",
+        duration: 0.3,
+        ease: "power2.easeInOut"
+    })
+    await gsap.to("#progressbar-wrapper",{
+        width: "83.33%",
+        duration: 0.3,
+        ease: "power2.easeInOut"
+    })
+
+    return
+}
+
 export async function hideProgressBar(){
     gsap.to("#submitBtn-wrapper",{
         width: "100%",

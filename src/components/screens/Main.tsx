@@ -11,6 +11,14 @@ declare global {
     interface Window {
         ipcAPIs:{
             selectFolder: ()=>Promise<string>;
+        },
+        imageManipulator: {
+            degradeImage: (
+                files: {path:string, size:number}[],
+                degradation: number,
+                destinationFolder: string,
+            )=>Promise<void>,
+            resizeImage: (imagePath: string, finalHeight:number, finalWidth: number)=>Promise<void>
         }
     }
 }
@@ -18,9 +26,8 @@ declare global {
 
 export default function Main() {
 
-    const {images, loading, setLoading} = useContext(AppContext)
+    const {images, loading, destinationFolder,degradation, setLoading, setDestinationFolder, setImages, setMode} = useContext(AppContext)
     const [currentTab, setCurrentTab] = useState<string>("Degrade")
-
 
     useEffect(()=>{
         if(images.length>0) animator.showFolderPickerButton()
@@ -29,10 +36,29 @@ export default function Main() {
 
     const handleOnSubmit = async()=>{
         setLoading(true)
-        if(currentTab === "Degrade")
+        if(currentTab === "Degrade"){
+
             await animator.hideStartButton()
-        else if(currentTab === "Resize")
+            const imgs:{path:string, size:number}[] = []
+            images.forEach((image)=>imgs.push({path:image.path, size: image.size}))
+            
+            await window.imageManipulator.degradeImage(imgs, degradation,destinationFolder,)
+
+            setLoading(false)
+            await animator.showStartButton()
+            setImages([])
+
+            
+        }
+        else if(currentTab === "Resize"){
             await animator.hideProgressBar()
+            // await (re)
+        }
+    }
+
+    const handleOnFolderPickerClick = async()=>{
+        const res =await window.ipcAPIs.selectFolder()
+        setDestinationFolder(res)
     }
     
   return (
@@ -43,17 +69,18 @@ export default function Main() {
             className='-translate-y-4 opacity-0 bg-gray-darker text-xs text-primary px-2 py-1'
             invertColors={true} 
             id="folder-picker"
-            onClick={async()=>{
-                const res =await window.ipcAPIs.selectFolder()
-                console.log(res)
-            }}
+            onClick={handleOnFolderPickerClick}
+            disabled={images.length > 0 ? false : true}
         >
-                Select download folder
+                Set destination folder
             </Button>
         <Separator color='transparent' spacing={"1rem 0"}  />
         <Tabs
             locked={loading}
-            onChange={(currentTab)=>setCurrentTab(currentTab.title)}
+            onChange={(currentTab)=>{
+                setCurrentTab(currentTab.title)
+                setMode(currentTab.title === "Degrade" ? "degrade":"resize")
+            }}
             tabs={[
                 {
                     title: "Degrade",
@@ -67,11 +94,11 @@ export default function Main() {
         />
         <Separator color='transparent' spacing={"0.5rem 0rem"} />
             
-        <div className="flex w-full bg-red-500 h-12 overflow-hidden">
+        <div className="flex w-full h-12 overflow-hidden">
             <div className="w-10/12" id='progressbar-wrapper'>
                 <ProgressBar loading={loading} progress={10} />
             </div>
-            <div className="w-2/12" id='submitBtn-wrapper'>
+            <div className="w-2/12 bg-red-400" id='submitBtn-wrapper'>
                 <SecondaryButton  
                     onClick={handleOnSubmit} 
                     style={{height: "100%", width: "100%"}}
@@ -89,10 +116,9 @@ export default function Main() {
 
 function DegradeChildren(){
 
-    const {images, loading} = useContext(AppContext)
+    const {images, loading, degradation, setDegradation} = useContext(AppContext)
     const [totalInitialImageSize, setTotalInitialImageSize] = useState("")
     const [totalFinalImageSize, setTotalFinalImageSize] = useState("")
-    const [sliderValue, setSliderValue] = useState(0)
 
     useEffect(()=>{
         const totalImagesSize = images.reduce((prev, curr)=>prev + curr.size, 0)
@@ -101,12 +127,12 @@ function DegradeChildren(){
 
     useEffect(()=>{
         const totalImagesSize = images.reduce((prev, curr)=>prev + curr.size, 0)
-        setTotalFinalImageSize(`${formatBytes(totalImagesSize - (totalImagesSize * (sliderValue/100)))} (${sliderValue}% lesser)`)
-    }, [sliderValue,images])
+        setTotalFinalImageSize(`${formatBytes(totalImagesSize - (totalImagesSize * (degradation/100)))} (${degradation}% lesser)`)
+    }, [degradation,images])
 
     
     function handleOnSliderChange(value:number){
-        setSliderValue(value)
+        setDegradation(value)
     }
     
     return(
@@ -117,14 +143,14 @@ function DegradeChildren(){
             </header>
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
             <Slider
-                disabled={(images.length >0 && loading===true) ? false : true} 
+                disabled={(images.length <= 0 || loading==true) ? true : false} 
                 label={{
                     topLeft: "initial size",
                     topRight: "final size",
                     bottomLeft: totalInitialImageSize,
                     bottomRight: totalFinalImageSize
                 }}
-                value={sliderValue}
+                value={images.length === 0 ? 0 : degradation}
                 onChange={handleOnSliderChange}
             />
         </div>

@@ -16,7 +16,7 @@ type SliderPropTypes={
     value?: number
 }
 
-function Slider({label, disabled=false, onChange, value=0}:SliderPropTypes) {
+export default function Slider({label, disabled=false, onChange, value=0}:SliderPropTypes) {
   return (
     <div className='w-full text-xs'>
         <div className="w-full flex justify-between items-center text-primary">
@@ -42,4 +42,4 @@ function Slider({label, disabled=false, onChange, value=0}:SliderPropTypes) {
 }
 
 
-export default memo(Slider)
+// export default memo(Slider)
