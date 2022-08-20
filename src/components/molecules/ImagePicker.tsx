@@ -1,7 +1,13 @@
-import React, { ChangeEvent, forwardRef, memo, Ref } from 'react'
+import React, { ChangeEvent, forwardRef, HTMLAttributes, memo, Ref } from 'react'
 import ImageIcon from '../atoms/Icons/ImageIcon'
 
-function ImagePicker({onChange, selectedImagesCount}:{onChange: (files: File[])=>void, selectedImagesCount:number}, ref:Ref<HTMLDivElement>) {
+interface ImagePickerProps{
+  onChange: (files: File[])=>void, 
+  selectedImagesCount:number,
+  multiple?: boolean
+}
+
+function ImagePicker({onChange, selectedImagesCount, multiple=false}:ImagePickerProps, ref:Ref<HTMLDivElement>) {
 
 
   function handleOnChange({target}:ChangeEvent<HTMLInputElement>){
@@ -23,7 +29,7 @@ function ImagePicker({onChange, selectedImagesCount}:{onChange: (files: File[])=
             id=""
             onChange={handleOnChange}
             title="select an image"
-            multiple
+            multiple={multiple}
           />
       </button>
       <label className='text-primary mt-3'>
