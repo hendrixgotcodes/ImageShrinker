@@ -48,8 +48,8 @@ app.on("ready", () => {
   ipcMain.handle("imageManipulator:degradeImage", (_, files, degradation, destinationFolder)=>{
     imageManipulator.degradeImage(files, degradation, destinationFolder)
   })
-  ipcMain.handle("imageManipulator:resizeImage", (_, imagePath, finalHeight, finalWidth)=>{
-    imageManipulator.resizeImage(imagePath, finalHeight, finalWidth)
+  ipcMain.handle("imageManipulator:resizeImage", (_, imagePath, destinationFolder, finalHeight, finalWidth)=>{
+    imageManipulator.resizeImage(imagePath, destinationFolder, finalHeight, finalWidth)
   })
   createWindow();
 });

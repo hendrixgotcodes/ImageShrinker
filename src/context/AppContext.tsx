@@ -1,7 +1,6 @@
 import React, { createContext, Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
 
 type ResizeType={
-    imageUrl: string,
     finalHeight: number,
     finalWidth: number
 }
@@ -12,23 +11,22 @@ type AppContextType={
     loading: boolean,
     destinationFolder: string,
     degradation: number,
-    resize: ResizeType,
+    resizeHeight: number,
+    resizeWidth: number,
     setImages: Dispatch<SetStateAction<File[]>> | (()=>void),
     setLoading: Dispatch<SetStateAction<boolean>> | (()=>void),
     setDestinationFolder: Dispatch<SetStateAction<string>> | (()=>void),
     setDegradation: Dispatch<SetStateAction<number>> | (()=>void),
     setMode: Dispatch<SetStateAction<"degrade"|"resize">> | (()=>void),
-    setResize: Dispatch<SetStateAction<ResizeType>> | (()=>void)
+    setResizeHeight: Dispatch<SetStateAction<number>> | (()=>void)
+    setResizeWidth: Dispatch<SetStateAction<number>> | (()=>void)
 
 }
 
 const AppContext = createContext<AppContextType>({
     mode: "degrade",
-    resize: {
-        finalHeight: 0,
-        finalWidth: 0,
-        imageUrl: ""
-    },
+    resizeHeight:0,
+    resizeWidth:0,
     images: [],
     loading: false,
     destinationFolder: "",
@@ -38,7 +36,8 @@ const AppContext = createContext<AppContextType>({
     setLoading: ()=>{},
     setDestinationFolder: ()=>{},
     setDegradation: ()=>{},
-    setResize: ()=>{},
+    setResizeHeight: ()=>{},
+    setResizeWidth: ()=>{},
     setMode: ()=>{},
 })
 
@@ -49,11 +48,8 @@ export function AppContextProvider({children}:{children:ReactNode}){
     const [loading, setLoading] = useState(false)
     const [destinationFolder, setDestinationFolder] = useState<string>("")
     const [degradation, setDegradation] = useState<number>(60)
-    const [resize, setResize] = useState<ResizeType>({
-        finalHeight: 0,
-        finalWidth: 0,
-        imageUrl: ""
-    })
+    const [resizeHeight, setResizeHeight] = useState<number>(0)
+    const [resizeWidth, setResizeWidth] = useState<number>(0)
 
     const memoised = useMemo(()=>({
         mode,
@@ -61,14 +57,16 @@ export function AppContextProvider({children}:{children:ReactNode}){
         destinationFolder, 
         degradation, 
         loading, 
-        resize,
+        resizeHeight,
+        resizeWidth,
         setLoading, 
         setImages, 
         setDestinationFolder, 
         setDegradation,
         setMode,
-        setResize,
-    }), [images, loading, destinationFolder, degradation, mode])
+        setResizeHeight,
+        setResizeWidth,
+    }), [images, loading, destinationFolder, degradation, mode, resizeHeight, resizeWidth])
     
     return(
         <AppContext.Provider value={{...memoised}}>
