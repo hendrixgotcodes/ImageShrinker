@@ -186,7 +186,7 @@ function ResizeChildrenComponent(){
         <div className='w-full'>
             <header>
                 <h1 className='uppercase text-lg text-primary font-regular'>Resize Image</h1>
-                <p className='text-gray-dark text-sm'>Set the new dimensions for your image.</p>
+                <p className='text-gray-dark text-sm'>Set the new dimensions of your image.</p>
             </header>
             <Separator color='transparent' spacing={"0.5rem 0rem"} />
             <div className="w-full flex justify-between items-center h-7">

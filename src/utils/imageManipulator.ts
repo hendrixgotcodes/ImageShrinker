@@ -33,8 +33,8 @@ export async function degradeImage(
 
         res
           .resize(
-            imageSizes[idx].width * (degradation / 100),
-            imageSizes[idx].height * (degradation / 100)
+            imageSizes[idx].width -(imageSizes[idx].width * (degradation / 100)),
+            imageSizes[idx].height - (imageSizes[idx].height * (degradation / 100))
           )
           .quality(degradation)
           .write(newFilePaths[idx])
