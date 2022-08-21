@@ -1,4 +1,4 @@
-import { dialog } from "electron";
+import { dialog, shell } from "electron";
 
 export async function handleOnSelectFolder(){
     const {canceled, filePaths} = await dialog.showOpenDialog({
@@ -7,4 +7,8 @@ export async function handleOnSelectFolder(){
     })
 
     return canceled ? "" : filePaths[0]
+}
+
+export async function handleOnOpenFolder(folderPath:string){
+    shell.openPath(folderPath)
 }

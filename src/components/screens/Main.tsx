@@ -5,12 +5,13 @@ import { Button, SecondaryButton, Separator, TextInput } from '../atoms'
 import { ProgressBar, Slider, Tabs } from '../molecules'
 import ImagesTray from '../organisms/ImagesTray'
 import * as animator from '../../utils/animator'
-// import logo from '../../assets/Logo.png'
+import * as notifications from "../../utils/notifications"
 
 declare global {
     interface Window {
         ipcAPIs:{
             selectFolder: ()=>Promise<string>;
+            openFolder: (_folderPath:string)=>void
         },
         imageManipulator: {
             degradeImage: (
@@ -52,6 +53,7 @@ export default function Main() {
             
             await window.imageManipulator.degradeImage(imgs, degradation,destinationFolder,)
             setProgress(100)
+            notifications.showDownloadFolder(images.length,destinationFolder)
 
             setLoading(false)
             await animator.showStartButton()

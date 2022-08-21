@@ -1,31 +1,35 @@
 import gsap from 'gsap'
-import React, { MutableRefObject, useEffect, useRef } from 'react'
+import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { CloseIcon } from '../atoms'
 
 export default function Image({img, onDelete}:{img: File, onDelete?: (img:File, target:MutableRefObject<HTMLDivElement>)=>void}) {
 
   const imgRef = useRef<HTMLImageElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [imgUrl, setImgUrl] = useState("")
 
   useEffect(()=>{
-    const imgComponent = imgRef?.current
-    const fileReader = new FileReader()
+    let fileReader = new FileReader()
     if(imgRef){
-      fileReader.onload = ()=> imgComponent.src=fileReader.result as string
+      fileReader.onload = ()=> {
+        setImgUrl(fileReader.result as string)
+        fileReader= null
+      }
       fileReader.readAsDataURL(img)
     }
 
-    return ()=>fileReader.onload = null
   },[])
 
+  const memoisedImgUrl = useMemo(()=>imgUrl, [imgUrl])
+  
   
 
   return (
     <div ref={containerRef} className='flex flex-col items-center justify-center text-xs w-28'>
-      <div className='w-30 h-24 rounded-lg flex justify-center items-center relative overflow-hidden'>
+      <div className='w-30 h-24 rounded-lg flex justify-center items-center relative overflow-hidden bg-gray-dark/20 border-none'>
           <img 
-            src="" 
-            alt={img.name}
+            src={memoisedImgUrl} 
+            // alt={img.name}
             className="w-full h-full object-cover" 
             ref={imgRef}
           />
