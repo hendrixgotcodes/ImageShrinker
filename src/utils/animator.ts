@@ -29,6 +29,20 @@ export function hideFolderPickerButton(){
     })
 }
 
+export function shakeFolderPickerButton(){
+    gsap.to("#folder-picker",{
+        keyframes:{
+            // x:[-25,0,25,0],
+            x:[0,-20,20,0],
+        },
+        yoyo:true,
+        duration: 0.1,
+        repeat: 2,
+        yoyoEase: "power2.easeInOut"
+    })
+    
+}
+
 export async function hideStartButton(){
     gsap.to("#btnSubmit--label", {
         duration: 0,

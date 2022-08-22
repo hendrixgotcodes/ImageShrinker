@@ -7,7 +7,7 @@ export function showDownloadFolder(degradedFileCount:number,directoryLink: strin
     const handleOnClick = ()=>window.ipcAPIs.openFolder(directoryLink)
 
     const toastContent = (<div>
-        <a onClick={handleOnClick} className="text-primary underline">
+        <a onClick={handleOnClick} className="text-primary underline text-sm">
             {degradedFileCount} {degradedFileCount ===1 ? "image" : "images"}
         </a>
         &nbsp;
@@ -17,6 +17,7 @@ export function showDownloadFolder(degradedFileCount:number,directoryLink: strin
     toast(toastContent, {
         position: "top-center",
         delay: 3000,
-        hideProgressBar: true
+        hideProgressBar: true,
+        closeButton: false
     })
 }

@@ -42,10 +42,12 @@ export default function Main() {
     },[images])
 
     const handleOnSubmit = async()=>{
+
+        if(!destinationFolder) return animator.shakeFolderPickerButton()
+        
         setLoading(true)
         if(currentTab === "Degrade"){
-            
-            
+
             setProgress(50)
             await animator.hideStartButton()
             const imgs:{path:string, size:number}[] = []
@@ -94,8 +96,8 @@ export default function Main() {
             onClick={handleOnFolderPickerClick}
             disabled={images.length > 0 ? false : true}
         >
-                Set destination folder
-            </Button>
+            Set destination folder
+        </Button>
         <Separator color='transparent' spacing={"1rem 0"}  />
         <Tabs
             locked={loading}
