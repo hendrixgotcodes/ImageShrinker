@@ -4,6 +4,7 @@ import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ipcAPIs", {
   selectFolder: () => ipcRenderer.invoke("dialog:selectFolder"),
+  openFolder: (folderPath:string) => ipcRenderer.send("shell:openFolder", folderPath),
 });
 
 contextBridge.exposeInMainWorld("imageManipulator", {

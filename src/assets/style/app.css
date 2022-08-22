@@ -736,6 +736,10 @@ video {
   border-top-width: 1px;
 }
 
+.border-none {
+  border-style: none;
+}
+
 .border-gray-500 {
   --tw-border-opacity: 1;
   border-color: rgb(240 237 255 / var(--tw-border-opacity));
@@ -764,6 +768,10 @@ video {
 .bg-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(205 167 21 / var(--tw-bg-opacity));
+}
+
+.bg-gray-dark\/20 {
+  background-color: rgb(170 170 170 / 0.2);
 }
 
 .bg-black\/60 {
@@ -854,19 +862,24 @@ video {
   text-transform: uppercase;
 }
 
-.text-gray-light {
-  --tw-text-opacity: 1;
-  color: rgb(250 248 255 / var(--tw-text-opacity));
-}
-
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(18 29 76 / var(--tw-text-opacity));
 }
 
+.text-gray-light {
+  --tw-text-opacity: 1;
+  color: rgb(250 248 255 / var(--tw-text-opacity));
+}
+
 .text-gray-dark {
   --tw-text-opacity: 1;
   color: rgb(170 170 170 / var(--tw-text-opacity));
+}
+
+.underline {
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }
 
 .opacity-0 {
@@ -943,6 +956,11 @@ video {
 *{
   font-family: Poppins, sans-serif;
   outline: none;
+}
+
+.Toastify__toast-body, .Toastify__toast{
+  margin: .2rem !important;
+  padding: .2rem !important;
 }
 
 .logo{
