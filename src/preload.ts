@@ -4,19 +4,35 @@ import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("ipcAPIs", {
   selectFolder: () => ipcRenderer.invoke("dialog:selectFolder"),
-  openFolder: (folderPath:string) => ipcRenderer.send("shell:openFolder", folderPath),
+  openFolder: (folderPath: string) => ipcRenderer.send("shell:openFolder", folderPath),
 });
 
 contextBridge.exposeInMainWorld("imageManipulator", {
   degradeImage: (
-    files:{path:string, size:number}[], 
-    degradation:number,
+    files: { path: string; size: number }[],
+    degradation: number,
     destinationFolder: string
-  )=> {
-    ipcRenderer.invoke("imageManipulator:degradeImage", files, degradation, destinationFolder)
+  ) => {
+    ipcRenderer.invoke(
+      "imageManipulator:degradeImage",
+      files,
+      degradation,
+      destinationFolder
+    );
   },
-  resizeImage: (imagePath: string, destinationFolder:string,finalHeight:number, finalWidth:number)=>{
-    ipcRenderer.invoke("imageManipulator:resizeImage", imagePath, destinationFolder, finalHeight, finalWidth)
-  }
+  resizeImage: (
+    imagePath: string,
+    destinationFolder: string,
+    finalHeight: number,
+    finalWidth: number
+  ) => {
+    ipcRenderer.invoke(
+      "imageManipulator:resizeImage",
+      imagePath,
+      destinationFolder,
+      finalHeight,
+      finalWidth
+    );
+  },
   // sendImageProcessingProgress
-})
+});

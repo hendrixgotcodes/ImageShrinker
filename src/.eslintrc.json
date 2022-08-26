@@ -20,5 +20,15 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "quotes": ["error", "double"],
+        "linebreak-style": ["error", "windows"],
+        "comma-dangle": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
+        "import/extensions": "off",
+        "import/no-unresolved": "off",
+        "react/require-default-props": "off",
+        "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "no-use-before-define": "off"
     }
 }
