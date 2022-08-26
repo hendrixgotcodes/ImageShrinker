@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
+import React, { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useMemo, useState } from "react";
 
 type ResizeType={
     finalHeight: number,
@@ -20,7 +20,7 @@ type AppContextType={
     setMode: Dispatch<SetStateAction<"degrade"|"resize">> | (()=>void),
     setResizeHeight: Dispatch<SetStateAction<number>> | (()=>void)
     setResizeWidth: Dispatch<SetStateAction<number>> | (()=>void)
-
+    resetAppState: ()=>void
 }
 
 const AppContext = createContext<AppContextType>({
@@ -39,6 +39,7 @@ const AppContext = createContext<AppContextType>({
     setResizeHeight: ()=>{},
     setResizeWidth: ()=>{},
     setMode: ()=>{},
+    resetAppState: ()=>{}
 })
 
 export function AppContextProvider({children}:{children:ReactNode}){
@@ -67,9 +68,19 @@ export function AppContextProvider({children}:{children:ReactNode}){
         setResizeHeight,
         setResizeWidth,
     }), [images, loading, destinationFolder, degradation, mode, resizeHeight, resizeWidth])
+
+    const resetAppState = useCallback(()=>{
+        setImages([])
+        setDestinationFolder("")
+        setDegradation(60)
+        setLoading(false)
+        setResizeWidth(0)
+        setResizeHeight(0)
+    }, [])
+
     
     return(
-        <AppContext.Provider value={{...memoised}}>
+        <AppContext.Provider value={{...memoised, resetAppState}}>
             {children}
         </AppContext.Provider>
     )

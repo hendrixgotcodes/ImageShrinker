@@ -32,7 +32,7 @@ declare global {
 
 export default function Main() {
 
-    const {images, loading, destinationFolder,degradation, resizeHeight, resizeWidth,setLoading, setDestinationFolder, setImages, setMode, setResizeHeight,setResizeWidth} = useContext(AppContext)
+    const {images, loading, destinationFolder,degradation, resizeHeight, resizeWidth,setLoading, setDestinationFolder, setImages, setMode, resetAppState} = useContext(AppContext)
     const [currentTab, setCurrentTab] = useState<string>("Degrade")
     const [progress,setProgress] = useState(0)
 
@@ -59,12 +59,9 @@ export default function Main() {
 
             setLoading(false)
             await animator.showStartButton()
-            setImages([])
-            setLoading(false)
+            
             setProgress(0)
-
-            setResizeHeight(0)
-            setResizeWidth(0)
+            resetAppState()
 
             
         }
